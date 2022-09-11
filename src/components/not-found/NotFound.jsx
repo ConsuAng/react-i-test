@@ -14,7 +14,7 @@ export default function NotFound() {
             <h3 className="text-sm font-medium text-yellow-800">No hay resultados para esta búsqueda</h3>
             <div className="mt-2 text-sm text-yellow-700">
               <p>
-                Debes buscar nombres de peliculas existentes del estudio Ghibli.
+                Debes buscar por nombre, director o año de estreno de película de Studio Ghibli.
               </p>
             </div>
           </div>
