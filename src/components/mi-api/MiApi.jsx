@@ -7,6 +7,7 @@ import NotFound from "../not-found/NotFound";
 export default function MiApi() {
   const [films, setFilms] = useState([]);
   const [search, setSearch] = useState("");
+  let sortData = [];
 
   useEffect(() => {
     getData();
@@ -14,16 +15,20 @@ export default function MiApi() {
 
   async function getData() {
     const url = "https://ghibliapi.herokuapp.com/films"
-    const res = await axios.get(url);
-    const { data } = await res;
-    const sortData = data.sort((a, b) => {
-      if (a.title < b.title) {
-        return -1;
-      } if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    });
+    try {
+      const res = await axios.get(url);
+      const { data } = await res;
+      sortData = data.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        } if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+    } catch (error) {
+      console.log(error)
+    }
 
     setFilms(sortData);
   }
@@ -56,27 +61,6 @@ export default function MiApi() {
               value={search}
               onChange={(e) => searchHandler(e)}
             />
-            <button
-              className="absolute p-2 text-gray-600 rounded-full transition -translate-y-1/2 hover:text-gray-700 bg-[#c1cba4] top-1/2 right-1 hover:border-transparentr"
-              type="button"
-              aria-label="Submit Search"
-              disabled={true}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </div>
